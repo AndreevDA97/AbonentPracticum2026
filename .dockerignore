@@ -1,0 +1,9 @@
+# Игнорируем всё лишнее при сборке Docker-образов
+**/bin/
+**/obj/
+**/node_modules/
+**/.git/
+**/.vs/
+**/.vscode/
+*.md
+!README.md

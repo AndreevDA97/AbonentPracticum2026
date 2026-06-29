@@ -1,0 +1,24 @@
+# .gitignore для студенческого проекта
+# Backend
+src/backend/**/bin/
+src/backend/**/obj/
+*.user
+*.suo
+*.vs/
+.vscode/
+
+# Frontend
+node_modules/
+dist/
+
+# Docker
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+*.swp
+*.swo

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Документация — Internal Utils</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 24px;
+            color: #1e293b;
+            line-height: 1.6;
+        }
+        h1 { color: #4f46e5; }
+        h2 { color: #3730a3; margin-top: 32px; }
+        table { border-collapse: collapse; width: 100%; margin: 16px 0; }
+        th, td { border: 1px solid #e2e8f0; padding: 8px 12px; text-align: left; }
+        th { background: #f5f7fa; }
+        code { background: #f1f5f9; padding: 2px 6px; border-radius: 4px; font-size: 0.9em; }
+        pre { background: #1e293b; color: #e2e8f0; padding: 16px; border-radius: 8px; overflow-x: auto; }
+        .back-link { color: #4f46e5; text-decoration: none; font-weight: 500; }
+        .back-link:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <a href="/" class="back-link">← Назад к утилитам</a>
+    <h1>Internal Utils — Документация</h1>
+    <p>Веб-приложение с набором вспомогательных инструментов для сотрудников компании.</p>
+
+    <h2>Стек</h2>
+    <table>
+        <tr><th>Слой</th><th>Технология</th></tr>
+        <tr><td>Backend</td><td>C# / ASP.NET Core 8 Web API</td></tr>
+        <tr><td>Frontend</td><td>Vanilla JavaScript (SPA на хэш-роутере)</td></tr>
+        <tr><td>База данных</td><td>PostgreSQL 16</td></tr>
+        <tr><td>ORM</td><td>Entity Framework Core 8</td></tr>
+        <tr><td>Контейнеризация</td><td>Docker + Docker Compose</td></tr>
+        <tr><td>Веб-сервер</td><td>Nginx (Alpine)</td></tr>
+    </table>
+
+    <h2>API (REST)</h2>
+    <table>
+        <tr><th>Метод</th><th>URL</th><th>Описание</th></tr>
+        <tr><td><code>GET</code></td><td><code>/api/utilities</code></td><td>Список всех утилит</td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/utilities/{endpoint}</code></td><td>Информация об утилите</td></tr>
+        <tr><td><code>POST</code></td><td><code>/api/utilities/{endpoint}/execute</code></td><td>Выполнить утилиту</td></tr>
+        <tr><td><code>GET</code></td><td><code>/api/utilities/{endpoint}/history</code></td><td>История выполнений</td></tr>
+    </table>
+
+    <p>Swagger UI: <a href="/swagger">/swagger</a></p>
+
+    <h2>Как добавить новую утилиту</h2>
+    <h3>1. Создать сервис в <code>Services/</code></h3>
+    <pre>
+namespace WebApp.Api.Services;
+
+public class MyNewService : IUtilityService
+{
+    public string Endpoint => "my-new-utility";
+    public string Execute(string input) => $"Результат: {input.ToUpper()}";
+}
+    </pre>
+
+    <h3>2. Зарегистрировать в <code>Program.cs</code></h3>
+    <pre>builder.Services.AddSingleton&lt;IUtilityService, MyNewService&gt;();</pre>
+
+    <h3>3. Обновить seed-данные в <code>AppDbContext.cs</code></h3>
+    <pre>
+new Utility {
+    Id = 28, Name = "Моя утилита",
+    Description = "Описание...",
+    Endpoint = "my-new-utility",
+    Category = "Прочее", Difficulty = 1,
+    IsImplemented = true
+}
+    </pre>
+
+    <h3>4. (Опционально) Добавить UI во frontend</h3>
+    <p>Создать страницу в <code>frontend/js/pages/</code> и зарегистрировать маршрут в <code>app.js</code>.</p>
+
+    <h2>Сервисы в Docker Compose</h2>
+    <table>
+        <tr><th>Сервис</th><th>Порт</th><th>Описание</th></tr>
+        <tr><td><code>postgres</code></td><td>5432</td><td>PostgreSQL 16</td></tr>
+        <tr><td><code>api</code></td><td>8080</td><td>ASP.NET Core Web API</td></tr>
+        <tr><td><code>frontend</code></td><td>3000</td><td>Nginx + SPA</td></tr>
+    </table>
+
+    <h2>Запуск</h2>
+    <pre>docker-compose up -d --build</pre>
+    <p>Frontend: <a href="http://localhost:3000">http://localhost:3000</a></p>
+
+</body>
+</html>

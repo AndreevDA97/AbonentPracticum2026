@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internal Utils — Внутренние утилиты компании</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="app-header">
+        <div class="container">
+            <a href="#dashboard" class="logo">🛠 Internal Utils</a>
+            <nav>
+                <a href="#dashboard">Дашборд</a>
+                <a href="/swagger" target="_blank">Swagger API</a>
+                <a href="/docs/" target="_blank">Документация</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container" id="app-content">
+        <!-- Динамический контент через роутер -->
+    </main>
+
+    <footer class="app-footer">
+        <div class="container">
+            <p>Практика студентов &copy; 2026. Версия 1.0.0</p>
+        </div>
+    </footer>
+
+    <script src="js/config.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/router.js"></script>
+    <script src="js/pages/dashboard.js"></script>
+    <script src="js/pages/utility.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

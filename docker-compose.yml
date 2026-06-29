@@ -1,0 +1,57 @@
+name: intern-utils
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: intern-postgres
+    environment:
+      POSTGRES_DB: intern_utils
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - intern-net
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  api:
+    build:
+      context: ./src/backend/WebApp.Api
+      dockerfile: Dockerfile
+    container_name: intern-api
+    depends_on:
+      postgres:
+        condition: service_healthy
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://+:8080
+    ports:
+      - "8080:8080"
+    networks:
+      - intern-net
+    restart: on-failure
+
+  frontend:
+    build:
+      context: ./src/frontend
+      dockerfile: Dockerfile
+    container_name: intern-frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - api
+    networks:
+      - intern-net
+
+volumes:
+  postgres_data:
+    driver: local
+
+networks:
+  intern-net:
+    driver: bridge
