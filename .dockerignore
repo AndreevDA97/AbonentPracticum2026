@@ -2,6 +2,7 @@
 **/bin/
 **/obj/
 **/node_modules/
+**/postgres_data/
 **/.git/
 **/.vs/
 **/.vscode/

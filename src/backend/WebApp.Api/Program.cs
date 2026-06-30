@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.OpenApi.Models;
 using WebApp.Api.Data;
 using WebApp.Api.Services;
@@ -78,5 +79,22 @@ app.UseSwaggerUI(c =>
 });
 
 app.MapControllers();
+
+// --- Раздача фронтенда в режиме Development ---
+// В production фронтенд раздаётся Nginx'ом (docker-compose)
+if (app.Environment.IsDevelopment())
+{
+    var frontendPath = Path.GetFullPath(Path.Combine(
+        app.Environment.ContentRootPath, "..", "..", "frontend"));
+
+    app.UseDefaultFiles(new DefaultFilesOptions
+    {
+        FileProvider = new PhysicalFileProvider(frontendPath)
+    });
+    app.UseStaticFiles(new StaticFileOptions
+    {
+        FileProvider = new PhysicalFileProvider(frontendPath)
+    });
+}
 
 app.Run();
