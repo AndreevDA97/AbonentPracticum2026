@@ -47,7 +47,9 @@ public class AppDbContext : DbContext
             new Utility { Id = 24, Name = "Конвертер цветов", Description = "Конвертирует цвета между HEX, RGB, HSL, CMYK. Определяет контрастные пары, проверяет на доступность (color-blindness).", Endpoint = "color-converter", Category = "Дизайн", Difficulty = 2, IsImplemented = false },
             new Utility { Id = 25, Name = "SQL Formatter / Minifier", Description = "Форматирует SQL-запросы с отступами (beautify) или сжимает в одну строку (minify).", Endpoint = "sql-formatter", Category = "Код", Difficulty = 2, IsImplemented = false },
             new Utility { Id = 26, Name = "Текстовый Diff-инструмент", Description = "Сравнивает два блока текста и подсвечивает добавленные, удалённые и изменённые строки.", Endpoint = "text-diff", Category = "Текст", Difficulty = 2, IsImplemented = false },
-            new Utility { Id = 27, Name = "Калькулятор пропорций и процентов", Description = "Вычисляет: «X это Y% от чего?», «На сколько % изменилось от A до B?», пропорциональное масштабирование.", Endpoint = "percent-calc", Category = "Числа", Difficulty = 1, IsImplemented = false }
+            new Utility { Id = 27, Name = "Калькулятор пропорций и процентов", Description = "Вычисляет: «X это Y% от чего?», «На сколько % изменилось от A до B?», пропорциональное масштабирование.", Endpoint = "percent-calc", Category = "Числа", Difficulty = 1, IsImplemented = false },
+            //
+            new Utility { Id = 28, Name = "Тестовая утилита", Description = "Тестовая утилита", Endpoint = "test-utility", Category = "Текст", Difficulty = 2, IsImplemented = true }
         );
     }
 }

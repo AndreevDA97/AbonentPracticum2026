@@ -7,6 +7,7 @@ const Router = {
     },
 
     navigate(hash) {
+        // TODO: добавить приоритеты роутов (в порядке их регистрации)
         const path = hash.replace('#', '') || 'dashboard';
         for (const [pattern, handler] of Object.entries(this._routes)) {
             // Поддержка параметров: utility/:endpoint
