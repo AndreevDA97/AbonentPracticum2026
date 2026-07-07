@@ -10,6 +10,8 @@ src/backend/**/obj/
 # Frontend
 node_modules/
 dist/
+src/Frontend/bin
+src/Frontend/obj
 
 # Docker
 .env.local
