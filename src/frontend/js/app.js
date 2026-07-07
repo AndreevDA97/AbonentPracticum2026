@@ -3,7 +3,7 @@
     // Регистрация маршрутов
     Router.register('dashboard', () => DashboardPage.render());
     Router.register('utility/:endpoint', (params) => {
-        if (params.endpoint == 'test-utility') {
+        if (params.endpoint == 'cipher-text') {
             CustomUtilityPage.render(params);
             return;
         }

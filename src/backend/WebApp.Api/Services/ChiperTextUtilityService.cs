@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WebApp.Api.Services;
 
-public class TestUtilityService : IUtilityService
+public class ChiperTextUtilityService : IUtilityService
 {
-    public string Endpoint => "test-utility";
+    public string Endpoint => "Cipher-text";
 
     public string Execute(string input)
     {
