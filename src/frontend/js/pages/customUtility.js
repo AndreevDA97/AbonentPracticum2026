@@ -37,8 +37,21 @@ const CustomUtilityPage = {
             html += `
                 <div class="utility-detail">
                     <div class="input-group">
-                        <label for="util-input">Входные данные:</label>
-                        <textarea id="util-input" placeholder="Введите данные для обработки..."></textarea>
+                        <label for="util-input-text">Текст:</label>
+                        <textarea id="util-input-text" placeholder="Введите данные для обработки..."></textarea>
+                    </div>
+                    <div class="input-group">
+                        <label for="util-input-cipher-type">Тип шифрования:</label>
+                        <select id="util-input-cipher-type">
+                            <option value="1">AES</option>
+                            <option value="2">TripleDes</option>
+                            <option value="3">Rabbit</option>
+                            <option value="4">Rc4</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="util-input-key">Секретный ключ:</label>
+                        <textarea id="util-input-key" placeholder="Введите секретный ключ для обработки..."></textarea>
                     </div>
                     <button class="btn btn-primary" id="btn-execute">▶ Выполнить</button>
                     <div id="exec-result"></div>
@@ -65,7 +78,16 @@ const CustomUtilityPage = {
 
             // Обработчик кнопки «Выполнить»
             document.getElementById('btn-execute')?.addEventListener('click', async () => {
-                const input = document.getElementById('util-input').value;
+                const input_text = document.getElementById('util-input-text').value;
+                const input_cipher_type = document.getElementById('util-input-cipher-type').value;
+                const input_key = document.getElementById('util-input-key').value;
+
+                const input = JSON.stringify({
+                    text: input_text,
+                    cipherType: Number(input_cipher_type),
+                    key: input_key,
+                });
+
                 const resultDiv = document.getElementById('exec-result');
                 resultDiv.innerHTML = '<div class="loading">Выполнение</div>';
 

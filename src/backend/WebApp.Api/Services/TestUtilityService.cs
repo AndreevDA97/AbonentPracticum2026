@@ -1,5 +1,7 @@
 using Newtonsoft.Json;
 using System.Globalization;
+using System.Security.Cryptography;
+using System.Text;
 
 namespace WebApp.Api.Services;
 
@@ -11,19 +13,54 @@ public class TestUtilityService : IUtilityService
     {
         var model = JsonConvert.DeserializeObject<TestUtilityRequest>(input);
 
-        // ...
-        return JsonConvert.SerializeObject(new TestUtilityReponse { Result1 = 123, Result2 = "OK!" });
+        string? encryptedcontent = null;
+
+        switch (model.CipherType)
+        {
+            case (int)CipherTypes.Aes: // AES
+                var crypt = Aes.Create();
+                byte[] IV = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
+                crypt.IV = IV;
+                crypt.BlockSize = 128;
+                HashAlgorithm hash = MD5.Create();
+                crypt.Key = hash.ComputeHash(Encoding.Unicode.GetBytes(model.Key));
+                
+                var textBytes = Encoding.Unicode.GetBytes(model.Text);
+                using (MemoryStream memoryStream = new MemoryStream())
+                {
+                    using (CryptoStream cryptoStream =
+                           new CryptoStream(memoryStream, crypt.CreateEncryptor(), CryptoStreamMode.Write))
+                    {
+                        cryptoStream.Write(textBytes, 0, textBytes.Length);
+                    }
+
+                    encryptedcontent = Convert.ToBase64String(memoryStream.ToArray());
+                }
+
+                break;
+            
+            default:
+                throw new NotImplementedException();
+        }
+        return JsonConvert.SerializeObject(new TestUtilityReponse { Result = encryptedcontent });
     }
+}
+
+public enum CipherTypes {
+    Aes = 1,
+    TripleDes = 2,
+    Rabbit = 3,
+    Rc4 = 4,
 }
 
 public class TestUtilityRequest
 {
-    public string Field1 { get; set; }
-    public string Field2 { get; set; }
+    public string Text { get; set; }
+    public int CipherType { get; set; }
+    public string Key { get; set; }
 }
 
 public class TestUtilityReponse
 {
-    public int Result1 { get; set; }
-    public string Result2 { get; set; }
+    public string Result { get; set; }
 }
