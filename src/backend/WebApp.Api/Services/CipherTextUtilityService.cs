@@ -5,9 +5,9 @@ using System.Text;
 
 namespace WebApp.Api.Services;
 
-public class ChiperTextUtilityService : IUtilityService
+public class CipherTextUtilityService : IUtilityService
 {
-    public string Endpoint => "Cipher-text";
+    public string Endpoint => "cipher-text";
 
     public string Execute(string input)
     {
@@ -17,7 +17,7 @@ public class ChiperTextUtilityService : IUtilityService
 
         switch (model.CipherType)
         {
-            case (int)CipherTypes.Aes: // AES
+            case CipherTypes.Aes: // AES
                 var crypt = Aes.Create();
                 byte[] IV = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 };
                 crypt.IV = IV;
@@ -56,7 +56,7 @@ public enum CipherTypes {
 public class TestUtilityRequest
 {
     public string Text { get; set; }
-    public int CipherType { get; set; }
+    public CipherTypes CipherType { get; set; }
     public string Key { get; set; }
 }
 
