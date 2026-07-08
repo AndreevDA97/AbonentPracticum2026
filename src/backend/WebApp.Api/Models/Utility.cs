@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace WebApp.Api.Models;
 
 /// <summary>
@@ -9,6 +11,7 @@ public class Utility
     public string Name { get; set; } = string.Empty;
     public string Description { get; set; } = string.Empty;
     public string Endpoint { get; set; } = string.Empty;
+    [Column("CategoryName")]
     public string Category { get; set; } = "Прочее";
     public int Difficulty { get; set; } = 1; // 1-3
     public bool IsImplemented { get; set; } = false;
