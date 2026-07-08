@@ -2,13 +2,8 @@
 (function () {
     // Регистрация маршрутов
     Router.register('dashboard', () => DashboardPage.render());
-    Router.register('utility/:endpoint', (params) => {
-        if (params.endpoint == 'cipher-text') {
-            CustomUtilityPage.render(params);
-            return;
-        }
-        UtilityPage.render(params);
-    });
+    Router.register('utility/cipher-text', () => CustomUtilityPage.render());
+    Router.register('utility/:endpoint', (params) => UtilityPage.render(params));
 
     // Старт
     Router.init();

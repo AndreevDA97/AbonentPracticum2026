@@ -1,8 +1,8 @@
 // Страница конкретной утилиты (выполнение + история)
 const CustomUtilityPage = {
-    async render(params) {
+    async render() {
         const content = document.getElementById('app-content');
-        const endpoint = params.endpoint;
+        const endpoint = "cipher-text";
 
         content.innerHTML = '<div class="loading">Загрузка утилиты</div>';
 
